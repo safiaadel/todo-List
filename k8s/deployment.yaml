@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo
+  template:
+    metadata:
+      labels:
+        app: todo
+    spec:
+      containers:
+        - name: todo-container
+          image: safiaadel/todo-list-app:latest
+          ports:
+            - containerPort: 4000
+          env:
+            - name: mongoDbUrl
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongoDbUrl
