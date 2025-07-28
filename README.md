@@ -83,22 +83,21 @@ This repository documents the complete implementation of the DevOps Internship A
    nano ansible.cfg           
   ```
 3. **Run the Playbook to Install Docker**
-
+![Ansible playbook](screenshots/ansibleplaybook.jpg)
   I used the following command to execute the playbook and install Docker on the target VM:
     ```bash
    ansible-playbook install-docker.yml -k
     ```
   
-![Ansible playbook](screenshots/ansibleplaybook.jpg)
 
 4. **Verify Docker Installation on the VM**
-
+![docker version](screenshots/dockerversion.jpg)
     After successful installation, I logged into the VM and checked the Docker version:
 
   ```bash
   docker --version
   ```
-![docker version](screenshots/dockerversion.jpg)
+
 
   Then tested Docker by running the hello-world container:
 
