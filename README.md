@@ -81,7 +81,7 @@ This repository documents the complete implementation of the DevOps Internship A
    nano install-docker.yml    # Create the Ansible playbook
    nano ansible.cfg           # Optional: specify configuration
   ```
-  ![Ansible setup](screenshots/ansible1.jpg)
+![Ansible setup](screenshots/ansible1.jpg)
 
 3. **Run the Playbook to Install Docker**
 
@@ -94,12 +94,15 @@ This repository documents the complete implementation of the DevOps Internship A
 4. **Verify Docker Installation on the VM**
 
     After successful installation, I logged into the VM and checked the Docker version:
+
   ```bash
   docker --version
   ```
-  ![docker version](screenshots/dockerversion.jpg)
+![docker version](screenshots/dockerversion.jpg)
+
   Then tested Docker by running the hello-world container:
-  ![docker test](screenshots/dockerhelloworld.jpg)
+
+![docker test](screenshots/dockerhelloworld.jpg)
 
 ### ✅ Part 3: Docker Compose & Auto Update 
 
@@ -129,7 +132,9 @@ This repository documents the complete implementation of the DevOps Internship A
    docker ps
    ```
    ![docker ps](screenshots/dockerps.png)
-  ***running application on http://localhost:4000***
+
+  **running application on http://localhost:4000**
+
   ![running](screenshots/running1.png)
   ```bash
   docker compose down
@@ -152,9 +157,11 @@ This repository documents the complete implementation of the DevOps Internship A
          - /var/run/docker.sock:/var/run/docker.sock
        restart: always
      ```
-  ***pushing image and compose up after watchowner***
+  **pushing image and compose up after watchowner**
+
   ![watchtower](screenshots/watchowner.png)
-  ***running in http://localhost:4001***
+
+  **running in http://localhost:4001**
   ![running](screenshots/running2.png)
 ---
 
@@ -227,22 +234,33 @@ This repository documents the complete implementation of the DevOps Internship A
    Visit: `https://localhost:9090`
 ![argorun](screenshots/argorun.png)
 ![argoui](screenshots/argoui.png)
-**Username: admin**
-**Password: Run:**
+
+* Username: admin
+* Password: Run:
+
 ```bash
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
 ```
 ![argoui](screenshots/argoon.png)
+
 7. **Deploy App with ArgoCD**
 ![argo](screenshots/argoyaml.png)
+
 8. **Verify ArgoCD deployed the app successfully.**
+
 ![argo](screenshots/argoapp.png)
+
 ![argo](screenshots/argoapp2.png)
+
 ![argo](screenshots/argoapp3.png)
+
 **Look for the service related to your app (e.g., todo-service), and port-forward it:**
+
 ```bash
 kubectl port-forward svc/todo-service 3000:4000
 ```
 **Then open http://localhost:3000 to test your running Todo app.**
+
 ![run argo](screenshots/runargo.png)
+
 ![running](screenshots/running4.png)
