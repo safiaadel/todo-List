@@ -83,12 +83,12 @@ This repository documents the complete implementation of the DevOps Internship A
   ```
 
 
-![Ansible setup](screenshots/ansible1.jpg)
+![Ansible setup](screenshots/ansble1.jpg)
 
 
 3. **Run the Playbook to Install Docker**
 
-    I used the following command to execute the playbook and install Docker on the target VM:
+  I used the following command to execute the playbook and install Docker on the target VM:
 
   ```bash
   ansible-playbook install-docker.yml -k
@@ -270,7 +270,7 @@ kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.pas
 
 ![argo](screenshots/argooapp2.png)
 
-![argo](screenshots/argoaopp3.png)
+![argo](screenshots/argooapp3.png)
 
 **Look for the service related to your app (e.g., todo-service), and port-forward it:**
 
