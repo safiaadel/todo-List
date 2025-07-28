@@ -84,13 +84,10 @@ This repository documents the complete implementation of the DevOps Internship A
   ```
 ---
 3. **Run the Playbook to Install Docker**
+
   I used the following command to execute the playbook and install Docker on the target VM:
 
-
-
-  ```bash
-  ansible-playbook install-docker.yml -k
-  ```
+  `ansible-playbook install-docker.yml -k`
   
   
 ![Ansible playbook](screenshots/ansibleplaybook.jpg)
@@ -165,7 +162,7 @@ This repository documents the complete implementation of the DevOps Internship A
 
 ![watchtower](screenshots/watchowner.png)
 
-  **running in http://localhost:4001**
+  running in `http://localhost:4001`
 
 ![running](screenshots/running2.png)
 ---
