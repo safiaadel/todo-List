@@ -75,7 +75,7 @@ This repository documents the complete implementation of the DevOps Internship A
    I created a working directory and initialized the necessary Ansible files:
 ![Ansible setup](screenshots/ansble1.jpg)
 
-   ```bash
+  ```bash
    mkdir -p ~/ansible-docker-setup
    cd ~/ansible-docker-setup
    nano inventory              
