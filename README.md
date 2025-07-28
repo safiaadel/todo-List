@@ -158,7 +158,7 @@ This repository documents the complete implementation of the DevOps Internship A
          - /var/run/docker.sock:/var/run/docker.sock
        restart: always
      ```
-  **pushing image and compose up after watchowner**
+  **pushing image and compose up after watchtower**
 
 ![watchtower](screenshots/watchowner.png)
 
@@ -178,20 +178,18 @@ This repository documents the complete implementation of the DevOps Internship A
 
 1. **Install Minikube locally**
 
-2. **Enable Ingress and start Minikube**
-
    ```bash
    minikube start --driver=docker
    ```
 ![minikube](screenshots/minikubestart.png)
-3. **Create Kubernetes Manifests:**
+2. **Create Kubernetes Manifests:**
 
    * `deployment.yaml`
    * `service.yaml`
    * `secret.yaml`
 ![minikubefiles](screenshots/minikubefiles.png)
 
-4. **Deploy App to Minikube**
+3. **Deploy App to Minikube**
 
    ```bash
    kubectl apply -f deployment.yaml
@@ -228,14 +226,14 @@ This repository documents the complete implementation of the DevOps Internship A
 
   ![running](screenshots/runningmini3.png)
   
-5. **Install ArgoCD**
+4. **Install ArgoCD**
 
    ```bash
    kubectl create namespace argocd
    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
    ```
 
-6. **Access ArgoCD UI**
+5. **Access ArgoCD UI**
 
    ```bash
    kubectl port-forward svc/argocd-server -n argocd 9090:443
@@ -255,11 +253,11 @@ kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.pas
 ```
 ![argoui](screenshots/argoon.png)
 
-7. **Deploy App with ArgoCD**
+6. **Deploy App with ArgoCD**
 
 ![argo](screenshots/argoyaml.png)
 
-8. **Verify ArgoCD deployed the app successfully.**
+7. **Verify ArgoCD deployed the app successfully.**
 
 ![argo](screenshots/argoapp.png)
 
@@ -272,7 +270,7 @@ kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.pas
 ```bash
 kubectl port-forward svc/todo-service 3000:4000
 ```
-**Then open http://localhost:3000 to test your running Todo app.**
+**Then open `http://localhost:3000` to test your running Todo app.**
 
 ![run argo](screenshots/runargo.png)
 
