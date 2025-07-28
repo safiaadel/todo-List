@@ -1,109 +1,248 @@
+# DevOps Internship Assessment - Todo List Node.js Application
 
-## Documentation
+This repository documents the complete implementation of the DevOps Internship Assessment tasks. The project showcases skills in Docker, GitHub Actions, Ansible, Docker Compose, and Kubernetes with ArgoCD.
 
-[Documentation](https://linktodocumentation)
+---
 
-📝 To-Do List nodeJs
+## 📌 Assessment Breakdown
 
-The to-do list application is a web-based application that allows users to create and manage a list of tasks. The user interface consists of a form to add new tasks, a list of all tasks, and controls to mark tasks as complete or delete them.
+### ✅ Part 1: Application Preparation
 
-To create the application, Node.js is used to set up the server and handle the logic of the application. Express.js is used to create the routes for the application, allowing the user to interact with the application through a web browser. EJS is used to create the views for the application, allowing the user to see the list of tasks and the form to add new tasks. CSS is used to style the application, making it visually appealing and easy to use.
+**Tasks:**
 
-MongoDB and Mongoose are used to store the tasks in a database, allowing the user to add, delete, and update tasks as needed. Nodemon is used to monitor changes to the code and automatically restart the server, making it easy to develop and test the application.
+* Clone this repo: [https://github.com/Ankit6098/Todo-List-nodejs](https://github.com/Ankit6098/Todo-List-nodejs)
+* Use your own MongoDB database.
+* Dockerize the application.
+* Create a GitHub Actions CI pipeline that builds and pushes the image to a private Docker registry.
 
-When the user adds a new task using the form, Node.js and Express.js handle the request and store the task in the database using Mongoose. When the user views the list of tasks, EJS displays the tasks from the database in a list on the web page. When the user marks a task as complete or deletes a task, Node.js and Express.js handle the request and update the database using Mongoose.
+**Implementation Steps:**
 
-Overall, the todo list application using Node.js, Express.js, EJS, CSS, JavaScript, MongoDB, Mongoose, and Nodemon can be a great way to create a functional and interactive web application that allows users to manage their tasks online. With the right combination of technologies, it is possible to create an application that is both functional and aesthetically pleasing, making it easy for users to manage their tasks in a convenient and efficient way.
+1. **Cloning the Repository**
 
-Technologies Used: NodeJS, ExpressJS, EJS, CSS, JavaScript, Nodemon, MongoDB, Mongoose.
-## Demo
+   ```bash
+   git clone https://github.com/Ankit6098/Todo-List-nodejs
+   cd Todo-List-nodejs
+   ```
 
-Under process...
-## Authors
+2. **Update `.env` file to use personal MongoDB**
 
-- [@AnkitVishwakarma](https://github.com/Ankit6098)
+3. **Create Dockerfile**
+
+#### docker file
+![dockefile](screenshots/dockerfile.png)
+
+4. **Build and push Docker image manually (initially)**
+
+   ```bash
+   docker build -t <your-dockerhub-username>/todo-app:latest .
+   docker push <your-dockerhub-username>/todo-app:latest
+   ```
+#### docker hub repository after push image
+![dockerhub](screenshots/dockerhub.png)
+
+#### database connected with docker file
+![database](screenshots/datadocker.jpg)
+
+5. **Create GitHub Actions Workflow (`.github/workflows/docker-ci.yml`)**
+
+#### example 
+![database](screenshots/dockerciyml.png)
+
+#### github workflow
+![database](screenshots/gitdockeraction.png)
+
+6. **Verify image pushed to Docker Hub successfully.**
 
 
-## Features
+---
 
-- Create, Update, and Delete Tasks: Enable users to create new tasks, update existing tasks (e.g., mark as completed, edit task details), and delete tasks they no longer need.
-- Task Categories provides Implement the ability for users to categorize their tasks into different categories (e.g., work, personal, shopping) or assign labels/tags to tasks for better organization and filtering.
-- MongoDb to store your the user data
-## Run Locally
+### ✅ Part 2: Ansible Setup on Local VM 
 
-Clone the project
+**Tasks:**
+- Create a Linux VM on your local machine or in the cloud.
+- Use Ansible to configure the VM and install Docker.
+- Ansible must run from your local machine against the VM.
 
+---
+
+**Implementation Steps:**
+
+1. **Used WSL Ubuntu as the Local Control Node**  
+   All Ansible commands were executed from **WSL Ubuntu** running on my local Windows machine.
+
+2. **Setup Project Directory and Files**
+
+   I created a working directory and initialized the necessary Ansible files:
+
+   ```bash
+   mkdir -p ~/ansible-docker-setup
+   cd ~/ansible-docker-setup
+   nano inventory              # Define the IP/user of the VM
+   nano install-docker.yml    # Create the Ansible playbook
+   nano ansible.cfg           # Optional: specify configuration
+  ```
+  ![Ansible setup](screenshots/ansible1.jpg)
+
+3. **Run the Playbook to Install Docker**
+
+    I used the following command to execute the playbook and install Docker on the target VM:
+  ```bash
+  ansible-playbook install-docker.yml -k
+  ```
+ ![Ansible playbook](screenshots/ansibleplaybook.jpg)
+
+4. **Verify Docker Installation on the VM**
+
+    After successful installation, I logged into the VM and checked the Docker version:
+  ```bash
+  docker --version
+  ```
+  ![docker version](screenshots/dockerversion.jpg)
+  Then tested Docker by running the hello-world container:
+  ![docker test](screenshots/dockerhelloworld.jpg)
+
+### ✅ Part 3: Docker Compose & Auto Update 
+
+**Tasks:**
+
+* Use Docker Compose to run the application.
+* Add health checks.
+* Set up a way to automatically detect and pull new images when the Docker registry is updated.
+
+**Implementation Steps:**
+
+1. **Create `docker-compose.yml`**
+   ![docker compose](screenshots/dockercompose.png)
+2. **Start the application**
+
+   ```bash
+   docker-compose up -d
+   ```
+   ![docker compose up](screenshots/composeup1.png)
+
+   ```bash
+   docker compose version
+   ```
+   ![docker compose up](screenshots/composeversion.png)
+
+   ```bash
+   docker ps
+   ```
+   ![docker ps](screenshots/dockerps.png)
+  ***running application on http://localhost:4000***
+  ![running](screenshots/running1.png)
+  ```bash
+  docker compose down
+  ```
+  ![docker compose down](screenshots/composedown.png)
+  ```bash
+  docker compose down --volumes
+  ```
+  ![compose volume down](screenshots/downvolums.png)
+3. **Auto Update Tool (Justification)**
+
+   * Chose **Watchtower** to automatically update the image when a new one is available in Docker Hub.
+
+   * **Add Watchtower to `docker-compose.yml`:**
+
+     ```yaml
+     watchtower:
+       image: containrrr/watchtower
+       volumes:
+         - /var/run/docker.sock:/var/run/docker.sock
+       restart: always
+     ```
+  ***pushing image and compose up after watchowner***
+  ![watchtower](screenshots/watchowner.png)
+  ***running in http://localhost:4001***
+  ![running](screenshots/running2.png)
+---
+
+### ✅ Part 4: Bonus - Kubernetes & ArgoCD 
+
+**Tasks:**
+
+* Use Kubernetes instead of Docker Compose.
+* Use ArgoCD for Continuous Deployment.
+
+**Implementation Steps:**
+
+1. **Install Minikube locally**
+
+2. **Enable Ingress and start Minikube**
+
+   ```bash
+   minikube start --driver=docker
+   ```
+![minikube](screenshots/minikubestart.png)
+3. **Create Kubernetes Manifests:**
+
+   * `deployment.yaml`
+   * `service.yaml`
+   * `secret.yaml`
+![minikubefiles](screenshots/minikubefiles.png)
+4. **Deploy App to Minikube**
+
+   ```bash
+   kubectl apply -f deployment.yaml
+   kubectl apply -f service.yaml
+   kubectl apply -f secret.yaml
+   ```
+![kubectlapply](screenshots/kubectlapply.png)
+  **get pods**
+  ```bash
+  kubectl get pods
+  ```
+![kubectl pods](screenshots/getpods.png)
+  **check logs**
+  ```bash
+  kubectl logs <pod-name>
+  ```
+  ![connected](screenshots/finalllly%20conected.png)
+  **get service**
+  ```bash
+  kubectl get service
+  ```
+  ![service](screenshots/getservice.png)
+  **run locally in minikube**
+  ```bash
+  minikube service <service-name>
+  ```
+  ![minikube run](screenshots/minikuberun.png)
+  **application running**
+  ![running](screenshots/runningmini3.png)
+5. **Install ArgoCD**
+
+   ```bash
+   kubectl create namespace argocd
+   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+   ```
+
+6. **Access ArgoCD UI**
+
+   ```bash
+   kubectl port-forward svc/argocd-server -n argocd 9090:443
+   ```
+
+   Visit: `https://localhost:9090`
+![argorun](screenshots/argorun.png)
+![argoui](screenshots/argoui.png)
+**Username: admin**
+**Password: Run:**
 ```bash
-  git clone https://github.com/Ankit6098/Todos-nodejs
+kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
 ```
-
-Go to the project directory and open index.html file
-
+![argoui](screenshots/argoon.png)
+7. **Deploy App with ArgoCD**
+![argo](screenshots/argoyaml.png)
+8. **Verify ArgoCD deployed the app successfully.**
+![argo](screenshots/argoapp.png)
+![argo](screenshots/argoapp2.png)
+![argo](screenshots/argoapp3.png)
+**Look for the service related to your app (e.g., todo-service), and port-forward it:**
 ```bash
-  cd Todos-nodejs
+kubectl port-forward svc/todo-service 3000:4000
 ```
-
-Install the packages
-
-```bash
-  npm install / npm i
-```
-
-Start the Server
-
-```bash
-    npm start / nodemon start
-```
-## Acknowledgements
-
- - [nodemon](https://nodemon.io/)
- - [mongoDb](https://www.mongodb.com/)
- - [mongoose](https://mongoosejs.com/)
-
-
-## Screenshots
-
-![225232515-4c100b6b-52e4-40f8-a6d4-85e30dc2f5e7](https://github.com/Ankit6098/Todos-nodejs/assets/92246613/487f548f-7ca6-4183-9443-c88c9f79c3f0)
-![225232960-da554f1f-ba4a-41f8-9856-edaebe339d76](https://github.com/Ankit6098/Todos-nodejs/assets/92246613/25515d2e-1d72-498d-8044-59a01c6b9127)
-![225238829-05433362-5b16-454c-92d5-5e536fe6912e](https://github.com/Ankit6098/Todos-nodejs/assets/92246613/316d15ca-1fe8-4581-80b1-fc316340bba6)
-![225239140-226f8eae-d8b8-4055-8a68-d85d523c2422](https://github.com/Ankit6098/Todos-nodejs/assets/92246613/44a0c418-449e-446f-8a8e-3c4e14fca8bf)
-![225239221-caf86f3d-ef17-4d18-80a6-c72123ff5444](https://github.com/Ankit6098/Todos-nodejs/assets/92246613/2ee90ab0-95d4-44f4-80ac-b17b088ac1ce)
-![225239406-98b7ba7d-df97-4d27-bb66-596a32187d87](https://github.com/Ankit6098/Todos-nodejs/assets/92246613/960ff353-1ce9-4ef8-94e4-10af09184fd2)
-![225239841-4b5d77f0-4a54-4339-b6b3-b6a1be6776b5](https://github.com/Ankit6098/Todos-nodejs/assets/92246613/f5ffc3b8-480f-4d11-9a0b-c469e3c17e8e)
-
-
-## Related
-
-Here are some other projects
-
-[Alarm CLock - javascript](https://github.com/Ankit6098/Todos-nodejs)\
-[IMDb Clone - javascript](https://github.com/Ankit6098/IMDb-Clone)
-
-
-## 🚀 About Me
-I'm a full stack developer...
-
-
-# Hi, I'm Ankit! 👋
-
-I'm a full stack developer 😎 ... Love to Develop Classic Unique fascinating and Eye Catching UI and Love to Create Projects and Building logics.
-## 🔗 Links
-[![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ankithub.me/Resume/)
-
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColorwhite=)](https://www.linkedin.com/in/ankit-vishwakarma-6531221b0/)
-
-
-## Other Common Github Profile Sections
-🧠 I'm currently learning FullStack Developer Course from Coding Ninjas
-
-📫 How to reach me ankitvis609@gmail.com
-
-
-## 🛠 Skills
-React, Java, Javascript, HTML, CSS, Nodejs, ExpressJs, Mongodb, Mongoose...
-
-
-## Feedback
-
-If you have any feedback, please reach out to us at ankitvis609@gmail.com
-
+**Then open http://localhost:3000 to test your running Todo app.**
+![run argo](screenshots/runargo.png)
+![running](screenshots/running4.png)
