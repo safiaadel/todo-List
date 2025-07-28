@@ -73,6 +73,7 @@ This repository documents the complete implementation of the DevOps Internship A
 2. **Setup Project Directory and Files**
 
    I created a working directory and initialized the necessary Ansible files:
+![Ansible setup](screenshots/ansble1.jpg)
 
    ```bash
    mkdir -p ~/ansible-docker-setup
@@ -81,8 +82,6 @@ This repository documents the complete implementation of the DevOps Internship A
    nano install-docker.yml    
    nano ansible.cfg           
   ```
-
-![Ansible setup](screenshots/ansble1.jpg)
 
 3. **Run the Playbook to Install Docker**
   I used the following command to execute the playbook and install Docker on the target VM:
