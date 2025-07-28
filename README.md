@@ -77,19 +77,25 @@ This repository documents the complete implementation of the DevOps Internship A
    ```bash
    mkdir -p ~/ansible-docker-setup
    cd ~/ansible-docker-setup
-   nano inventory              # Define the IP/user of the VM
-   nano install-docker.yml    # Create the Ansible playbook
-   nano ansible.cfg           # Optional: specify configuration
+   nano inventory              
+   nano install-docker.yml    
+   nano ansible.cfg           
   ```
+
+
 ![Ansible setup](screenshots/ansible1.jpg)
+
 
 3. **Run the Playbook to Install Docker**
 
     I used the following command to execute the playbook and install Docker on the target VM:
+
   ```bash
   ansible-playbook install-docker.yml -k
   ```
- ![Ansible playbook](screenshots/ansibleplaybook.jpg)
+  
+  
+![Ansible playbook](screenshots/ansibleplaybook.jpg)
 
 4. **Verify Docker Installation on the VM**
 
@@ -133,7 +139,7 @@ This repository documents the complete implementation of the DevOps Internship A
    ```
    ![docker ps](screenshots/dockerps.png)
 
-  **running application on http://localhost:4000**
+  Visit: `https://localhost:4000`
 
   ![running](screenshots/running1.png)
   ```bash
@@ -159,10 +165,11 @@ This repository documents the complete implementation of the DevOps Internship A
      ```
   **pushing image and compose up after watchowner**
 
-  ![watchtower](screenshots/watchowner.png)
+![watchtower](screenshots/watchowner.png)
 
   **running in http://localhost:4001**
-  ![running](screenshots/running2.png)
+
+![running](screenshots/running2.png)
 ---
 
 ### ✅ Part 4: Bonus - Kubernetes & ArgoCD 
@@ -188,6 +195,7 @@ This repository documents the complete implementation of the DevOps Internship A
    * `service.yaml`
    * `secret.yaml`
 ![minikubefiles](screenshots/minikubefiles.png)
+
 4. **Deploy App to Minikube**
 
    ```bash
@@ -196,28 +204,35 @@ This repository documents the complete implementation of the DevOps Internship A
    kubectl apply -f secret.yaml
    ```
 ![kubectlapply](screenshots/kubectlapply.png)
+
   **get pods**
   ```bash
   kubectl get pods
   ```
 ![kubectl pods](screenshots/getpods.png)
+
   **check logs**
   ```bash
   kubectl logs <pod-name>
   ```
   ![connected](screenshots/finalllly%20conected.png)
+
   **get service**
   ```bash
   kubectl get service
   ```
   ![service](screenshots/getservice.png)
+
   **run locally in minikube**
   ```bash
   minikube service <service-name>
   ```
   ![minikube run](screenshots/minikuberun.png)
+
   **application running**
+
   ![running](screenshots/runningmini3.png)
+  
 5. **Install ArgoCD**
 
    ```bash
@@ -232,11 +247,13 @@ This repository documents the complete implementation of the DevOps Internship A
    ```
 
    Visit: `https://localhost:9090`
+
 ![argorun](screenshots/argorun.png)
+
 ![argoui](screenshots/argoui.png)
 
-* Username: admin
-* Password: Run:
+* **Username:** admin
+* **Password:** Run:
 
 ```bash
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 -d
@@ -244,15 +261,16 @@ kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.pas
 ![argoui](screenshots/argoon.png)
 
 7. **Deploy App with ArgoCD**
+
 ![argo](screenshots/argoyaml.png)
 
 8. **Verify ArgoCD deployed the app successfully.**
 
 ![argo](screenshots/argoapp.png)
 
-![argo](screenshots/argoapp2.png)
+![argo](screenshots/argooapp2.png)
 
-![argo](screenshots/argoapp3.png)
+![argo](screenshots/argoaopp3.png)
 
 **Look for the service related to your app (e.g., todo-service), and port-forward it:**
 
